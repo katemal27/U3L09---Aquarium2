@@ -1,4 +1,5 @@
 let fishX, fishY, fishSize;
+let fishX2, fishY2, fishSize2, fishColor2
 let fishColor;
 let aquariumName = "My Aquarium";
 let foodX, foodY;
@@ -8,6 +9,10 @@ let bubbles = [];
 
 function setup() {
   createCanvas(800, 600);
+  fishX2 = 100
+  fishY2 = 50
+  fishSize2 = 40
+  fishColor2 = 'yellow'
   fishX = width / 2;
   fishY = height / 2;
   fishSize = 50;
@@ -27,6 +32,10 @@ function setup() {
 
 function draw() {
   background(50, 150, 200);
+
+  fill(fishColor2)
+  ellipse(fishX2,fishY2,fishSize2,fishSize2/2)
+  triangle(fishX2 - fishSize2 / 2, fishY2, fishX2 - fishSize2, fishY2 - fishSize2 / 4, fishX2 - fishSize2, fishY2 + fishSize2 / 4)
  
   // Display aquarium name
   textSize(24);
@@ -56,6 +65,19 @@ function draw() {
     if (bubbles[i].y < 0) {
       bubbles[i].y = height;
     }
+    
+    if(keyIsDown(LEFT_ARROW)){
+      fishX2 -= 0.3
+    }
+    if(keyIsDown(RIGHT_ARROW)){
+      fishX2 +=0.3
+    }
+    if(keyIsDown(UP_ARROW)){
+      fishY2 -=0.3
+    }
+    if(keyIsDown(DOWN_ARROW)){
+      fishY2 +=0.3
+    }
   }
  
   // Draw food
@@ -74,6 +96,12 @@ function draw() {
     foodDropped = false;
   } else {
     fishColor = color(200, 100, 100);
+  }
+  if (dist(fishX2, fishY2, foodX, foodY) < fishSize2 / 2 && foodDropped) {
+    fishColor2 = 'red';
+    foodDropped = false;
+  } else {
+    fishColor2 = 'yellow';
   }
 }
 
